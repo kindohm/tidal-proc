@@ -1,0 +1,20 @@
+-- test
+
+do
+  harmor $
+    (# nudge "0.325") $
+    whenmod 8 4 (# ab "1") $
+    note "0(3,8)"
+    # x (scale 0 1 $ slow 10 sine)
+    # y (scale 0 1 $ slow 11 $ (0.25 <~) $ sine)
+    # z (scale 0 1 $ slow 12 sine)
+    # ab "0.001"
+  vis $ slow 1 $ whenmod 8 4 (# view "1") $
+    setting "foo(3,8)"
+    # vx (scale 0 1 $ slow 10 sine)
+    # vy (scale 0 1 $ slow 11 $ (0.25 <~) $ sine)
+    # vz (scale 0 1 $ slow 12 sine)
+    # view "0"
+    # nudge "0"
+
+  hush
