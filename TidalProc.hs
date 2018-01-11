@@ -11,15 +11,20 @@ module TidalProc where
     params = [
       S "setting" Nothing,
       F "view" (Just 0),
-      F "va" (Just 0),
-      F "vb" (Just 0),
-      F "vc" (Just 0),
-      F "vx" (Just 0),
-      F "vy" (Just 0),
-      F "vz" (Just 0)
+      F "a" (Just 0),
+      F "b" (Just 0),
+      F "c" (Just 0),
+      F "d" (Just 0),
+      F "e" (Just 0),
+      F "f" (Just 0),
+      F "g" (Just 0),
+      F "camx" (Just 0),
+      F "camy" (Just 0),
+      F "camz" (Just 0),
+      F "reset" (Just 0)
     ],
     cpsStamp = True,
-    latency = 0.38
+    latency = 0.1
   }
 
   procSlang = OscSlang {
@@ -35,9 +40,14 @@ module TidalProc where
 
   setting = makeS procShape "setting"
   view = makeF procShape "view"
-  va = makeF procShape "va"
-  vb = makeF procShape "vb"
-  vc = makeF procShape "vc"
-  vx = makeF procShape "vx"
-  vy = makeF procShape "vy"
-  vz = makeF procShape "vz"
+  a = makeF procShape "a"
+  b = makeF procShape "b"
+  c = makeF procShape "c"
+  d = makeF procShape "d"
+  e = makeF procShape "e"
+  f = makeF procShape "f"
+  g = makeF procShape "g"
+  camx = makeF procShape "camx"
+  camy = makeF procShape "camy"
+  camz = makeF procShape "camz"
+  reset = makeF procShape "reset"
