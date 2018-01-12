@@ -30,3 +30,14 @@ hush
 
 harmor $ note "0"
 rytm $ midinote "0"
+
+
+let sprefix p = with s_p (liftA2 (++) (p::Pattern String))
+let banks samp = sprefix samp
+
+do
+  let pat = "{1 0 0 1 0 0 1 0 1 0 1 1 1 0 0 0 0 0 1}%8"
+  d1 $ rarely (# s "bank1-scene1-hit2") $ gain pat # s "bank1-scene1-hit1"
+
+
+d1 silence
