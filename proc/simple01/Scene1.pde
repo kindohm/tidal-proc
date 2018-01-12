@@ -7,13 +7,15 @@ class Scene1 extends Scene {
   int minRows = 1;
   int maxRows = 100;
   int currentRow = 0, currentCol = 0, rectWidth, rectHeight;
-  float stroke;
+  float stroke, fadeRate;
+  int red1 = 255, green1 = 0, blue1 = 255, red2 = 0, green2 = 255, blue2 = 255;
   Scene1Cell[][] table;
 
   Scene1() {
+    name = "scene1";
     buildTable();
   }
-
+  
   void buildTable() {
     currentRow = 0;
     currentCol = 0;
@@ -24,8 +26,9 @@ class Scene1 extends Scene {
 
   void hit(float hitVal, float a, float b, float c) {
 
-    stroke = map(c, 0, 1, 1, 15);
-
+    stroke = 5;
+    fadeRate = map(c,0,1,0,10);
+    
     int newCols = int(map(a, 0, 1, minCols, maxCols));
     int newRows = int(map(b, 0, 1, minRows, maxRows));
 
@@ -39,7 +42,7 @@ class Scene1 extends Scene {
       buildTable();
     }
 
-    table[currentCol][currentRow] = new Scene1Cell(hitVal, stroke);
+    table[currentCol][currentRow] = new Scene1Cell(hitVal, stroke, fadeRate);
 
     currentRow++;
 
@@ -54,7 +57,7 @@ class Scene1 extends Scene {
   }
 
   void draw() {
-    float hitVal, strokeVal;
+    float hitVal, strokeVal, opacity;
     Scene1Cell cell;
 
     if (table == null) {
@@ -69,20 +72,23 @@ class Scene1 extends Scene {
         if (cell != null) {
           hitVal = cell.getHitVal();
           strokeVal = cell.getStroke();
+          opacity = cell.getOpacity();
         } else {
           hitVal = 0;
           strokeVal = 1;
+          opacity = 0;
         }
 
         strokeWeight(strokeVal);
         if (hitVal > 0.5) {
-          fill(100, 100, 255, 200);
+          fill(red2, green2, blue2, opacity);
         } else if (hitVal > 0) {
-          fill(0, 255, 255, 200);
+          fill(red1, green1, blue1, opacity);
         } else {
-          fill(0, 0, 0);
+          fill(0, 0, 0, 0);
         }
         rect(col * rectWidth, row * rectHeight, rectWidth, rectHeight);
+        if (cell != null) cell.fade();
       }
     }
   }
@@ -91,10 +97,14 @@ class Scene1 extends Scene {
 class Scene1Cell {
   float stroke;
   float hitVal;
+  float fadeRate;
+  float opacity;
 
-  Scene1Cell(float newHitVal, float newStroke) {
+  Scene1Cell(float newHitVal, float newStroke, float newFadeRate) {
     stroke = newStroke;
     hitVal = newHitVal;
+    fadeRate = newFadeRate;
+    opacity = 255;
   }
 
   float getStroke() {
@@ -103,5 +113,20 @@ class Scene1Cell {
 
   float getHitVal() {
     return hitVal;
+  }
+  
+  float getFadeRate(){
+    return fadeRate;
+  }
+  
+  void fade(){
+    opacity -= fadeRate;
+    if (opacity <= 0){
+      opacity = 0;
+    }
+  }
+  
+  float getOpacity(){
+    return opacity;
   }
 }

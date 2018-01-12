@@ -1,5 +1,10 @@
 abstract class Scene {
-
+  String name;
+  
+  String getName(){
+    return name;
+  }
+  
   void draw() {
   }
 
