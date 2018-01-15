@@ -9,84 +9,48 @@ class Scene3 extends Scene {
   int maxRows = 10;
   int minSlots = 1;
   int maxSlots = 10;
-  int currentRow = 0, currentCol = 0, currentSlot = 0, shapeSize = 55;
-  int red1 = 255, green1 = 100, blue1 = 200, red2 = 255, green2 = 200, blue2 = 120;
-  Scene3Cell[][][] table;
+  float shapeSize = 55;
+  float currentFade = 0;
+  float currentScale = 1;
+  float currentHitVal = 0;
+  float vary = 0;
+  float currentVary = 0;
+
 
   Scene3() {
     name = "scene3";
-    buildTable();
   }
 
-  void init() {
+  void init(String oldSceneName) {
   }
 
-  void buildTable() {
-    currentRow = 0;
-    currentCol = 0;
-    currentSlot = 0;
-    table = new Scene3Cell[cols][rows][slots];
-  }
+  void hit(float hitVal, float a, float b, float c, float d, float fade) {
+    cam.reset(0);
+    currentScale = 1;
+    currentVary = 0;
 
-  void hit(float hitVal, float a, float b, float c, float fade) {
-    //cam.reset(0);
-    
-    int newCols = int(map(a, 0, 1, minCols, maxCols));
-    int newRows = int(map(b, 0, 1, minRows, maxRows));
-    int newSlots = int(map(c, 0, 1, minSlots, maxSlots));
-    float newFade = map(fade, 0, 1, 0, 0.1);
+    cols = int(map(a, 0, 1, minCols, maxCols));
+    rows = int(map(b, 0, 1, minRows, maxRows));
+    slots = int(map(c, 0, 1, minSlots, maxSlots));
 
-    if (newCols != cols || newRows != rows || newSlots != slots) {
-      rows = newRows;
-      cols = newCols;
-      slots = newSlots;
-      buildTable();
-    }
+    vary = map(d, 0, 1, 0, 0.05);
 
-    if (currentRow == 0 && currentCol == 0 && currentSlot == 0) {
-      buildTable();
-    }
-
-    table[currentCol][currentRow][currentSlot] = new Scene3Cell(hitVal, newFade);
-
-    currentRow++;
-
-    if (currentRow >= rows) {
-      currentRow = 0;
-      currentCol++;
-    }
-
-    if (currentCol >= cols) {
-      currentCol = 0;
-      currentSlot++;
-    }
-
-    if (currentSlot >= slots) {
-      currentSlot = 0;
-    }
+    currentFade = map(fade, 0, 1, 0, 0.02);
+    currentHitVal = hitVal;
   }
 
   void doRotation() {
     cam.rotateY(0.01);
-    //cam.rotateX(0.001);
+    cam.rotateX(0.002);
   }
 
   void draw() {    
     postDraw2d();
     doRotation();
-    sphereDetail(10);
-    //lights();
-    directionalLight(200, 102, 126, 0.15, -0.5, -0.7);
 
-    float hitVal, strokeVal, opacity;
-    Scene3Cell cell;
-
-    if (table == null) {
-      return;
-    }
+    directionalLight(200, 102, 126, 0.15, -0.5, -0.7);    
 
     noStroke();
-
 
     translate(-cols/2*shapeSize, -rows/2*shapeSize, -slots/2*shapeSize);
 
@@ -97,75 +61,54 @@ class Scene3 extends Scene {
           // safety!
           if (col >= cols || row >= rows || slot >= slots) return;
 
-          cell = table[col][row][slot];
-          if (cell != null) {
-            hitVal = cell.getHitVal();
-          } else {
-            break;
-          }
-
           noFill();
           strokeWeight(1);
-          stroke(0, 175, 255);
+
+
           translate(col * shapeSize, row * shapeSize, slot * shapeSize);
+          rotate(currentVary);
 
-          drawPyramid(cell.scale);
-
+          if (currentHitVal < 0.5) {
+            stroke(225, 225, 255);
+            drawPyramid();
+          } else {
+            stroke(0, 255, 0);
+            box(shapeSize * 0.6 * currentScale);
+          }
+          
+          rotate(-currentVary);
 
           translate(-col * shapeSize, -row * shapeSize, -slot * shapeSize);
-
-          if (cell != null) cell.fade();
         }
       }
     }
     translate(cols/2*shapeSize, rows/2*shapeSize, slots/2*shapeSize);
+    currentScale -= currentFade;
+    currentVary += vary;
   }
 
 
-  void drawPyramid(float scale) {
-    float size = shapeSize * 0.25 * scale;
+  void drawPyramid() {
+    float size = shapeSize * 0.4 * currentScale;
 
     beginShape();
-    
-    vertex(-size, -size, -size);
-    vertex( size, -size, -size);
-    vertex(   0, 0, size);
-
-    vertex( size, -size, -size);
-    vertex( size, size, -size);
-    vertex(   0, 0, size);
-
-    vertex( size, size, -size);
-    vertex(-size, size, -size);
-    vertex(   0, 0, size);
 
     vertex(-size, size, -size);
-    vertex(-size, -size, -size);
-    vertex(   0, 0, size);    
+    vertex( size, size, -size);
+    vertex(   0, -size, 0);
+
+    vertex( size, size, -size);
+    vertex( size, size, size);
+    vertex(   0, -size, 0);
+
+    vertex( size, size, size);
+    vertex(-size, size, size);
+    vertex(   0, -size, 0);
+
+    vertex(-size, size, size);
+    vertex(-size, size, -size);
+    vertex(   0, -size, 0);    
 
     endShape();
-  }
-}
-
-class Scene3Cell {
-  float hitVal;
-  float fadeRate;
-  float scale = 1;
-
-  Scene3Cell(float newHitVal, float newFadeRate) {
-    hitVal = newHitVal;
-    fadeRate = newFadeRate;
-  }
-
-  float getHitVal() {
-    return hitVal;
-  }
-  
-  float getScale(){
-    return scale;
-  }
-  
-  void fade() {
-    scale *= (1-fadeRate);
   }
 }

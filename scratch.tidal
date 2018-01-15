@@ -50,16 +50,17 @@ let shift p = (1<~) $ p
     shift' x p = (x <~) $ p
 
 do
-  let patcat = shift' 3 $ sometimesBy 0.3 ((+1) <$>) $ shift' 2 $ "0*8"
-      mod p = id $ degradeBy 0.01 $ density 16 $ p
+  let patcat = shift' 3 $ sometimesBy 0.5 ((+1) <$>) $ shift' 2 $ "0*8"
+      mod p = id $ degradeBy 0.8 $ density 8 $ p
   vis $ shift $
     mod $
     hit patcat
-    # view "[scene3]/8"
-    # a "0.7"
-    # b "0.7"
-    # c "0.7"
-    # fade (scale 0 0.1 $ shift' 1020 $ rand)
+    # view "[scene2b scene2]/8"
+    # a (discretise (1/200) $ scale 0 1 $ slow 1.1 rand)
+    # b (discretise (1/200) $ scale 0 1 $ slow 1.2 rand)
+    # c (discretise (1/200) $ scale 0 1 $ slow 1.3 rand)
+    # d (scale 0 1 $ slow 1.5 rand)
+    # fade (scale 0 1 $ slow 1.4 rand)
     # nudge "0.30"
   d1 $
       mod $

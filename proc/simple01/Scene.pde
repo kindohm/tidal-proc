@@ -5,13 +5,13 @@ abstract class Scene {
     return name;
   }
 
-  void init() {
+  void init(String oldSceneName) {
   }
 
   void draw() {
   }
 
-  void hit(float hitVal, float a, float b, float c, float fade) {
+  void hit(float hitVal, float a, float b, float c, float d, float fade) {
   }
 
   void preDraw2d() {

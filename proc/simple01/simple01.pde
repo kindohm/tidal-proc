@@ -13,7 +13,7 @@ float currentMouseWheelCount;
 OscP5 oscP5;
 NetAddress myRemoteLocation;
 PeasyCam cam;
-float oscA, oscB, oscC, oscHit, oscFade;
+float oscA, oscB, oscC, oscD, oscHit, oscFade;
 
 void setup() {
   //fullScreen(P3D);
@@ -41,20 +41,19 @@ void setup() {
 }
 
 void oscEvent(OscMessage msg) {
-  println("HERE?");
-  
   // msg.print();
   
   if (msg.checkAddrPattern("/proc_osc")==true) {
 
     oscHit = msg.get(1).floatValue();
     sceneName = msg.get(2).stringValue();
-    oscA = msg.get(3).floatValue();
-    oscB = msg.get(4).floatValue();
-    oscC = msg.get(5).floatValue();
-    oscFade = msg.get(6).floatValue();
+    oscFade = msg.get(3).floatValue();
+    oscA = msg.get(4).floatValue();
+    oscB = msg.get(5).floatValue();
+    oscC = msg.get(6).floatValue();
+    oscD = msg.get(7).floatValue();
 
-    msg.print();
+    //msg.print();
 
     //dirty = true;
     doHitOsc();
@@ -73,7 +72,7 @@ void draw() {
   if (scene == null) return;
 
   if (scene != lastScene) {
-    scene.init();
+    scene.init(lastScene.name);
   }
 
   scene.draw();
@@ -106,17 +105,18 @@ void doHit() {
   float c = map(currentMouseWheelCount, 0, 100, 0, 1);
   float a = map(mouseX, 0, width, 0, 1);
   float b = map(mouseY, 0, height, 0, 1);
+  float d = 0;
   Scene scene = getScene();
   if (mouseButton == LEFT) {
-    scene.hit(1, a, b, c, 0.5);
+    scene.hit(1, a, b, c, d, 0.5);
   } else {
-    scene.hit(0, a, b, c, 0.5);
+    scene.hit(0, a, b, c, d, 0.5);
   }
 }
 
 void doHitOsc() {
   Scene scene = getScene();
-  scene.hit(oscHit, oscA, oscB, oscC, oscFade);
+  scene.hit(oscHit, oscA, oscB, oscC, oscD, oscFade);
 }
 
 

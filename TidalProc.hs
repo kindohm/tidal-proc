@@ -11,10 +11,11 @@ module TidalProc where
     params = [
       F "hit" (Just 0),
       S "view" (Just ""),
+      F "fade" (Just 0),
       F "a" (Just 0),
       F "b" (Just 0),
       F "c" (Just 0),
-      F "fade" (Just 0)
+      F "d" (Just 0)
     ],
     cpsStamp = True,
     latency = 0.1
@@ -33,7 +34,8 @@ module TidalProc where
 
   hit = makeF procShape "hit"
   view = makeS procShape "view"
+  fade = makeF procShape "fade"
   a = makeF procShape "a"
   b = makeF procShape "b"
   c = makeF procShape "c"
-  fade = makeF procShape "fade"
+  d = makeF procShape "d"

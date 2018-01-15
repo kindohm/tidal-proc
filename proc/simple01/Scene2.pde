@@ -18,7 +18,7 @@ class Scene2 extends Scene {
     buildTable();
   }
 
-  void init() {
+  void init(String oldSceneName) {
   }
 
   void buildTable() {
@@ -28,7 +28,7 @@ class Scene2 extends Scene {
     table = new Scene2Cell[cols][rows][slots];
   }
 
-  void hit(float hitVal, float a, float b, float c, float fade) {
+  void hit(float hitVal, float a, float b, float c, float d, float fade) {
     
     int newCols = int(map(a, 0, 1, minCols, maxCols));
     int newRows = int(map(b, 0, 1, minRows, maxRows));

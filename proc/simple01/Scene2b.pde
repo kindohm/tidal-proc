@@ -9,7 +9,7 @@ class Scene2b extends Scene2 {
     blue2 = 0;
   }
 
-  void init() {
+  void init(String oldSceneName) {
     //cam.reset(0);
     //cam.rotateY(-1);
     //cam.rotateX(0);

@@ -16,7 +16,7 @@ class Scene1 extends Scene {
     buildTable();
   }
 
-  void init() {
+  void init(String oldSceneName) {
   }
 
   void buildTable() {
@@ -27,7 +27,7 @@ class Scene1 extends Scene {
     table = new Scene1Cell[cols][rows];
   }
 
-  void hit(float hitVal, float a, float b, float c, float fade) {
+  void hit(float hitVal, float a, float b, float c, float d, float fade) {
 
     stroke = 5;
     fadeRate = map(fade, 0, 1, 0, 10);
