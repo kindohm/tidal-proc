@@ -82,3 +82,24 @@ do
 
 
 vis $ hit "1*4 0*4" # view "scene1" # a "0.2" # b "0.1" # c "0.4"  # fade "0.9"
+
+
+
+
+
+
+
+
+do
+  let patcat = sometimesBy 0.2 ((+1) <$>) $ shift' 1 $ "0/2"
+      mod p = id $ degradeBy 0.001 $ shift $ foldEvery [2,4,6] (density (4/3)) $ p
+  vis $
+    mod $
+    hit patcat
+    # view "[scene4]/40"
+    # a 0.5
+    # b "0.5"
+    # c "0.5"
+    # d "0.5"
+    # fade (scale 0 1 $ slow 1.4 rand)
+    # nudge "0.2"

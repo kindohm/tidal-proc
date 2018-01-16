@@ -8,6 +8,7 @@ class Scene4 extends Scene {
   int currentX, currentY;
   int centerX, centerY;
   int currentSquareSize = 0;
+  float cellWidth, cellHeight;
 
   String getName() {
     return "scene4";
@@ -31,6 +32,9 @@ class Scene4 extends Scene {
     if (cols % 2 == 0) cols++;
     if (rows % 2 == 0) rows++;
 
+    cellWidth = width/cols;
+    cellHeight = height/rows;
+
     if (table == null || cols != oldCols || rows != oldRows) {
       buildTable();
       currentX = centerX;
@@ -39,9 +43,11 @@ class Scene4 extends Scene {
       currentSquareSize = 1;
       return;
     } 
-
+    
     advance();
     table[currentX][currentY] = new Scene4Cell();
+    
+    println(currentX + ", " + currentY);
   }
 
   void advance() {
@@ -94,15 +100,15 @@ class Scene4 extends Scene {
 
     noFill();
     stroke(255);
-    
-    for (int x = 0; x < cols; x++){
-      for (int y = 0; y < rows; y++){
+    strokeWeight(5);
+
+    for (int x = 0; x < cols; x++) {
+      for (int y = 0; y < rows; y++) {
         Scene4Cell cell = table[x][y];
-        
+
         if (cell == null) break;
-        
-        rect(10*x, 10*y, 10, 10);
-        
+
+        rect(cellWidth*x, cellHeight*y, cellWidth, cellHeight);
       }
     }
 
