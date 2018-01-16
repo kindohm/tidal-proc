@@ -8,4 +8,10 @@ class Scene1b extends Scene1 {
     green2 = 255; 
     blue2 = 255;
   }
+
+  void init(String oldSceneName) {
+    if (oldSceneName != "scene1") {
+      cam.reset(0);
+    }
+  }
 }

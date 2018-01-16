@@ -17,6 +17,9 @@ class Scene1 extends Scene {
   }
 
   void init(String oldSceneName) {
+    if (oldSceneName != "scene1b") {
+      cam.reset(0);
+    }
   }
 
   void buildTable() {

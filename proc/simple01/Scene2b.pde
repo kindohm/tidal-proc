@@ -10,11 +10,9 @@ class Scene2b extends Scene2 {
   }
 
   void init(String oldSceneName) {
-    //cam.reset(0);
-    //cam.rotateY(-1);
-    //cam.rotateX(0);
-    //cam.rotateZ(0);
-    //cam.rotateY(-3.33);
+    if (oldSceneName != "scene2"){
+        cam.reset(0);
+    }
   }
 
   void doRotation() {

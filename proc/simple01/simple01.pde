@@ -19,16 +19,18 @@ void setup() {
   //fullScreen(P3D);
   size(800, 600, P3D);
 
-  cam = new PeasyCam(this, 500);
+  cam = new PeasyCam(this, 0, 0, 0, 500);
 
   scenesHash = new HashMap<String, Scene>();
 
-  scenesArray = new Scene[5];
+  scenesArray = new Scene[7];
   scenesArray[0] = new Scene1();
   scenesArray[1]= new Scene1b();
   scenesArray[2] = new Scene2();
   scenesArray[3] = new Scene2b();
   scenesArray[4] = new Scene3();
+  scenesArray[5] = new Scene3b();
+  scenesArray[6] = new Scene4();
 
   for (int i = 0; i < scenesArray.length; i++) {
     scenesHash.put(scenesArray[i].getName(), scenesArray[i]);
@@ -42,7 +44,7 @@ void setup() {
 
 void oscEvent(OscMessage msg) {
   // msg.print();
-  
+
   if (msg.checkAddrPattern("/proc_osc")==true) {
 
     oscHit = msg.get(1).floatValue();
@@ -72,7 +74,7 @@ void draw() {
   if (scene == null) return;
 
   if (scene != lastScene) {
-    scene.init(lastScene.name);
+    scene.init(lastScene != null ? lastScene.name : "");
   }
 
   scene.draw();

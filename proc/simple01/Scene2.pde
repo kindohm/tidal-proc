@@ -9,7 +9,7 @@ class Scene2 extends Scene {
   int maxRows = 10;
   int minSlots = 1;
   int maxSlots = 10;
-  int currentRow = 0, currentCol = 0, currentSlot = 0, shapeSize = 55;
+  int currentRow = 0, currentCol = 0, currentSlot = 0, shapeSize = 85;
   int red1 = 255, green1 = 100, blue1 = 200, red2 = 255, green2 = 200, blue2 = 120;
   Scene2Cell[][][] table;
 
@@ -19,6 +19,10 @@ class Scene2 extends Scene {
   }
 
   void init(String oldSceneName) {
+        if (oldSceneName != "scene2b"){
+        cam.reset(0);
+    }
+
   }
 
   void buildTable() {
@@ -65,16 +69,17 @@ class Scene2 extends Scene {
   }
 
   void doRotation(){
-    cam.rotateY(0.001);
+    cam.rotateY(0.002);
   }
 
   void draw() {    
 
     postDraw2d();
     doRotation();
-    sphereDetail(10);
+    sphereDetail(13);
     //lights();
     directionalLight(200, 102, 126, 0.15, -0.5, -0.7);
+    ambientLight(55,55,55);
 
     float hitVal, strokeVal, opacity;
     Scene2Cell cell;
