@@ -52,23 +52,23 @@ let shift p = (1<~) $ p
 cps 1
 
 do
-  let patcat = sometimesBy 0.2 ((+1) <$>) $ shift' 1 $ "0*2"
-      mod p = id $ degradeBy 0.4 $ shift $ foldEvery [2,4,6] (density (4/3)) $ p
+  let patcat = sometimesBy 0.2 ((+1) <$>) $ shift' 1 $ "0*10"
+      mod p = id $ degradeBy 0.2 $ shift $ foldEvery [2,4,6] (density (1)) $ p
   vis $
     mod $
     hit patcat
-    # view "[scene3]/40"
-    # a 1
+    # view (discretise (1/1) $ slow 2.33 $ choose ["scene4", "scene4b"])
+    # a 0.7
     # b "1"
     # c "1"
     # d "0.1"
-    # fade (scale 0 1 $ slow 1.4 rand)
-    # nudge "0.2"
+    # fade (scale 0 0.2 $ slow 1.3 rand)
+    # nudge "0.3"
   d1 $
       mod $
-      (|+| n "1") $
+      (|+| n "0") $
       n patcat
-        # s "s"
+        # s (discretise (1/1) $ slow 2.33 $ choose ["v", "z"])
         # cut "1"
         # orbit "0" # size (scale 0.01 0.9 $ slow 10 tri)
         # room "0"
@@ -92,7 +92,7 @@ vis $ hit "1*4 0*4" # view "scene1" # a "0.2" # b "0.1" # c "0.4"  # fade "0.9"
 
 do
   let patcat = sometimesBy 0.2 ((+1) <$>) $ shift' 1 $ "0/2"
-      mod p = id $ degradeBy 0.001 $ shift $ foldEvery [2,4,6] (density (4/3)) $ p
+      mod p = id $ degradeBy 0.00001 $ shift $ foldEvery [2,4,6] (density (4/3)) $ p
   vis $
     mod $
     hit patcat
